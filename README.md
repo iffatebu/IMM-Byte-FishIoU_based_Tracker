@@ -12,5 +12,33 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 
 ## Table of Contents
 - Repository Structure
+- Installation
+- Pretrained weight (optional)
+- Poposal
+- Usage
+- Datasets (optional)
+- Results
+- Citation
+- Acknowledgments
+
+IMM-Byte/
+├── detector/                 # YOLOX-X detection code + configs
+│   └── yolox_x_gfisherd.py
+├── tracker/
+│   ├── byte_tracker.py       # original ByteTrack association logic (modified)
+│   ├── imm_filter.py         # NEW: IMM estimator (CV + CA Kalman filters)
+│   ├── fish_iou.py           # NEW: FishIoU association metric
+│   └── kalman_filter.py      # original single-model KF (kept for comparison/ablation)
+├── configs/
+│   └── gfisherd24.yaml
+├── weights/                  # pretrained weights (see Pretrained Weights section)
+├── tools/
+│   ├── train.py
+│   ├── track.py              # run tracking on a video/sequence
+│   └── eval_motmetrics.py    # compute IDF1 / MOTA / IDSW etc.
+├── datasets/
+│   └── README.md             # how to obtain GFISHERD24 / DanceTrack
+├── requirements.txt
+└── README.md
 
 
