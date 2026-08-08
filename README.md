@@ -22,23 +22,24 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 - Acknowledgments
 
 IMM-Byte/
-├── detector/                 # YOLOX-X detection code + configs
-│   └── yolox_x_gfisherd.py
-├── tracker/
-│   ├── byte_tracker.py       # original ByteTrack association logic (modified)
+├── detector/                 # YOLOX-X detection code and configurations
+│   └── yolox_x_gfisherd.py   # YOLOX-X detector configured for GFISHERD24
+├── tracker/                  # Core tracking and association algorithms
+│   ├── byte_tracker.py       # Modified ByteTrack association logic
 │   ├── imm_filter.py         # NEW: IMM estimator (CV + CA Kalman filters)
 │   ├── fish_iou.py           # NEW: FishIoU association metric
-│   └── kalman_filter.py      # original single-model KF (kept for comparison/ablation)
+│   └── kalman_filter.py      # Original single-model KF (for comparison/ablation)
 ├── configs/
-│   └── gfisherd24.yaml
-├── weights/                  # pretrained weights (see Pretrained Weights section)
+│   └── gfisherd24.yaml       # Dataset and tracking hyperparameters
+├── weights/                  # Directory for pretrained model weights
 ├── tools/
-│   ├── train.py
-│   ├── track.py              # run tracking on a video/sequence
-│   └── eval_motmetrics.py    # compute IDF1 / MOTA / IDSW etc.
+│   ├── train.py              # Detector training script
+│   ├── track.py              # Inference script to run tracking on video/sequences
+│   └── eval_motmetrics.py    # Evaluation script for IDF1, MOTA, IDSW, etc.
 ├── datasets/
-│   └── README.md             # how to obtain GFISHERD24 / DanceTrack
-├── requirements.txt
-└── README.md
+│   └── README.md             # Dataset setup instructions (GFISHERD24 / DanceTrack)
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+
 
 
