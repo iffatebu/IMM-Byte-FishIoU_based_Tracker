@@ -21,25 +21,78 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 - Citation
 - Acknowledgments
 
+## Repository Structure
+
+```text
 IMM-Byte/
-├── detector/                 # YOLOX-X detection code and configurations
-│   └── yolox_x_gfisherd.py   # YOLOX-X detector configured for GFISHERD24
-├── tracker/                  # Core tracking and association algorithms
-│   ├── byte_tracker.py       # Modified ByteTrack association logic
-│   ├── imm_filter.py         # NEW: IMM estimator (CV + CA Kalman filters)
-│   ├── fish_iou.py           # NEW: FishIoU association metric
-│   └── kalman_filter.py      # Original single-model KF (for comparison/ablation)
+│
+├── detector/
+│   └── yolox_x_gfisherd.py
+│       # YOLOX-X detector configuration for GFISHERD24
+│
+├── tracker/
+│   ├── byte_tracker.py
+│   │   # Modified ByteTrack tracking and association logic
+│   │
+│   ├── imm_filter.py
+│   │   # Interacting Multiple Model (IMM) estimator
+│   │   # using Constant Velocity (CV) and Constant Acceleration (CA) models
+│   │
+│   ├── fish_iou.py
+│   │   # FishIoU association metric for underwater fish tracking
+│   │
+│   └── kalman_filter.py
+│       # Original single-model Kalman Filter
+│       # retained for baseline comparison and ablation studies
+│
 ├── configs/
-│   └── gfisherd24.yaml       # Dataset and tracking hyperparameters
-├── weights/                  # Directory for pretrained model weights
+│   └── gfisherd24.yaml
+│       # Dataset, detector, and tracking hyperparameters
+│
+├── weights/
+│   # Directory for pretrained model weights
+│
 ├── tools/
-│   ├── train.py              # Detector training script
-│   ├── track.py              # Inference script to run tracking on video/sequences
-│   └── eval_motmetrics.py    # Evaluation script for IDF1, MOTA, IDSW, etc.
+│   ├── train.py
+│   │   # Detector training script
+│   │
+│   ├── track.py
+│   │   # Tracking inference on videos or image sequences
+│   │
+│   └── eval_motmetrics.py
+│       # MOT evaluation for IDF1, MOTA, IDSW, and other metrics
+│
 ├── datasets/
-│   └── README.md             # Dataset setup instructions (GFISHERD24 / DanceTrack)
-├── requirements.txt          # Python dependencies
-└── README.md                 # Project documentation
+│   └── README.md
+│       # Dataset preparation and setup instructions
+│       # for GFISHERD24 and DanceTrack
+│
+├── requirements.txt
+│   # Python dependencies
+│
+└── README.md
+    # Project documentation
+```
+
+### Directory and File Descriptions
+
+| Path                           | Description                                                                                                         |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `detector/`                    | Contains the YOLOX-X object detection configuration and implementation used for fish detection.                     |
+| `detector/yolox_x_gfisherd.py` | YOLOX-X detector configured for the GFISHERD24 dataset.                                                             |
+| `tracker/`                     | Contains the core multi-object tracking, motion estimation, and association components.                             |
+| `tracker/byte_tracker.py`      | Modified ByteTrack implementation containing the primary tracking and data-association logic.                       |
+| `tracker/imm_filter.py`        | Implements the IMM estimator with parallel CV and CA Kalman filters for adaptive motion prediction.                 |
+| `tracker/fish_iou.py`          | Implements the FishIoU association metric used to improve spatial matching between detections and predicted tracks. |
+| `tracker/kalman_filter.py`     | Original single-model Kalman Filter retained for baseline comparison and ablation experiments.                      |
+| `configs/gfisherd24.yaml`      | Contains dataset paths, detector settings, tracking parameters, and other experiment-specific hyperparameters.      |
+| `weights/`                     | Stores pretrained YOLOX-X model checkpoints and other required model weights.                                       |
+| `tools/train.py`               | Script for training the object detector.                                                                            |
+| `tools/track.py`               | Inference script for running IMM-Byte on videos or image sequences.                                                 |
+| `tools/eval_motmetrics.py`     | Evaluation script for calculating standard MOT metrics, including IDF1, MOTA, and IDSW.                             |
+| `datasets/README.md`           | Provides instructions for downloading, organizing, and preparing GFISHERD24 and DanceTrack datasets.                |
+| `requirements.txt`             | Lists the Python dependencies required to run the project.                                                          |
+| `README.md`                    | Main documentation for installation, usage, methodology, experiments, and reproduction.                             |
 
 
 
