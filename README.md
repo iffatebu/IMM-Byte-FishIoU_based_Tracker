@@ -34,13 +34,13 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 <table>
   <tr>
     <td align="center">
-      <b>ByteTrack</b><br>
+      <b>761901310_cam2_2</b><br>
       <a href="https://www.youtube.com/watch?v=ch_nS1iQS_A">
         <img src="Images/video1_thumbnail.png" width="400">
       </a>
     </td>
     <td align="center">
-      <b>IMM-Byte</b><br>
+      <b>761901362_cam4_6</b><br>
       <a href="https://www.youtube.com/watch?v=fyS69M8kON4">
         <img src="Images/video2_thumbnail.png" width="400">
       </a>
@@ -49,13 +49,13 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 
   <tr>
     <td align="center">
-      <b>Occlusion Scenario</b><br>
+      <b>761901372_cam2_1</b><br>
       <a href="https://www.youtube.com/watch?v=8c4z4JQcgRI">
         <img src="Images/video3_thumbnail.png" width="400">
       </a>
     </td>
     <td align="center">
-      <b>Identity Preservation</b><br>
+      <b>761901391_cam3_1</b><br>
       <a href="https://www.youtube.com/watch?v=I24V1gQmYpA">
         <img src="Images/video4_thumbnail.png" width="400">
       </a>
