@@ -24,14 +24,23 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 | --- | --- | --- | --- | --- | --- |
 | HOTA ↑ |39.44 | **46.254**  | 	44.321 | 45.34 | 45.084 |
 | DetA ↑ | 32.723 | 41.649  |	42.041  | 41.959 | **42.262** |
-| AssA ↑ | 48.301 | **52.318 ** | 	47.344 | 49.532 | 48.669 |
+| AssA ↑ | 48.301 | **52.318** | 	47.344 | 49.532 | 48.669 |
 | IDSW↓| 281 | 439  | 485 | 318 | **253** |
 | MOTA ↑ | 43.50%  | 57.50% | 60.6% | 60.6%  | **61.10%**  |
 | IDF1 ↑ | 41.494 | 52.195  |	62.70 | **64.80** | 63.60 |
 | MT ↑ | 101  | 215 |	399 | 387 | **403** |
 | ML ↓ | 485 | 297 |	233 | 233 | **219** |
 
-
+<table>
+  <tr>
+    <td><video src="Videos/761901372_cam2_1.mp4" width="400" controls></video></td>
+    <!-- <td><video src="Videos/imm_byte.mp4" width="400" controls></video></td> -->
+  </tr>
+  <!-- <tr>
+    <td><video src="Videos/scenario1.mp4" width="400" controls></video></td>
+    <td><video src="Videos/scenario2.mp4" width="400" controls></video></td>
+  </tr> -->
+</table>
 ## Table of Contents
 - Repository Structure
 - Installation
