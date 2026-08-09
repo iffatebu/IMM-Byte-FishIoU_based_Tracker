@@ -19,11 +19,18 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
   <em>Overview of the proposed IMM-Byte framework.</em>
 </p>
 
-| Metric | ByteTrack<br>(baseline)| IMM-Byte<br>(proposed) | IMM-Byte-FishIoU<br>(proposed)
-| --- | --- | --- | --- |
-| Identity Switches (IDSW)↓| 485 | 318 | 253 |
-| MOTA ↑ | 60.6% | 60.6%  | 61.10%  |
-| IDF1 ↑ | 	62.70 | 64.80 | 63.60 |
+# Tracking performance
+| Metric | OC-SORT<br>(baseline)| BoT-SORT<br>(baseline)|ByteTrack<br>(baseline)| IMM-Byte<br>(proposed) | IMM-Byte-FishIoU<br>(proposed)
+| --- | --- | --- | --- | --- | --- |
+| HOTA ↑ |39.44 | **46.254**  | 	44.321 | 45.34 | 45.084 |
+| DetA ↑ | 32.723 | 41.649  |	42.041  | 41.959 | **42.262** |
+| AssA ↑ | 48.301 | **52.318 ** | 	47.344 | 49.532 | 48.669 |
+| IDSW↓| 281 | 439  | 485 | 318 | **253** |
+| MOTA ↑ | 43.50%  | 57.50% | 60.6% | 60.6%  | **61.10%**  |
+| IDF1 ↑ | 41.494 | 52.195  |	62.70 | **64.80** | 63.60 |
+| MT ↑ | 101  | 215 |	399 | 387 | **403** |
+| ML ↓ | 485 | 297 |	233 | 233 | **219** |
+
 
 ## Table of Contents
 - Repository Structure
