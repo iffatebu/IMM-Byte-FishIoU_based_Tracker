@@ -12,7 +12,7 @@ An enhanced version of ByteTrack for tracking fish in underwater low-light, occl
 Underwater survey cameras record fish swimming past structural bars, vegetation, and each other. Standard tracking software often "loses" a fish mid-video and assigns it a new identity when it reappears which is called an identity switch (IDSW). If a fish is double-counted this way, abundance estimates for fisheries management become unreliable. IMM-Byte reduces this problem substantially: compared to the widely used ByteTrack tracker, it cuts identity switches by 47.84% (from 485 to 253) on our GFISHERD24 survey dataset, while also improving overall tracking accuracy.
 
 <p align="center">
-  <img src="Images/IMM_model_update_v2.jpg" width="900" alt="Overview of the IMM-Byte tracking framework">
+  <img src="Images/IMM_model_update_v2.JPG" width="900" alt="Overview of the IMM-Byte tracking framework">
 </p>
 
 <p align="center">
