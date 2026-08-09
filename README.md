@@ -2,7 +2,7 @@
 An enhanced version of ByteTrack for tracking fish in underwater low-light, occlusion based images. IMM-Byte replaces ByteTrack's single motion model with an Interacting Multiple Model (IMM) filter (Constant Velocity + Constant Acceleration) and introduces FishIoU, an association metric adapted for underwater occlusions, so that individual fish keep the same identity as they swim past camera obstructions, accelerate suddenly, or turn sharply.
 
 <p align="center">
-  <img src="Images/Full_function_diagram_v4.png" width="900" alt="Overview of the IMM-Byte tracking framework">
+  <img src="Images/Full_function_diagram_v4.jpg" width="900" alt="Overview of the IMM-Byte tracking framework">
 </p>
 
 <p align="center">
