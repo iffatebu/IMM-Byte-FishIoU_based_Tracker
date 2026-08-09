@@ -31,21 +31,38 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 | MT ↑ | 101  | 215 |	399 | 387 | **403** |
 | ML ↓ | 485 | 297 |	233 | 233 | **219** |
 
-<p align="center">
-  <video src="Videos/imm_byte.mp4" width="900" alt="Overview of the IMM-Byte tracking framework">
-</p>
-
-
-<!-- <table>
+<table>
   <tr>
-    <td><video src="Videos/761901372_cam2_1.mp4" width="400" controls></video></td>
-    <!-- <td><video src="Videos/imm_byte.mp4" width="400" controls></video></td> -->
-  <!-- </tr> -->
-  <!-- <tr>
-    <td><video src="Videos/scenario1.mp4" width="400" controls></video></td>
-    <td><video src="Videos/scenario2.mp4" width="400" controls></video></td>
-  </tr> -->
-<!-- </table> --> -->
+    <td align="center">
+      <b>ByteTrack</b><br>
+      <a href="https://www.youtube.com/watch?v=ch_nS1iQS_A">
+        <img src="Images/video1_thumbnail.png" width="400">
+      </a>
+    </td>
+    <td align="center">
+      <b>IMM-Byte</b><br>
+      <a href="https://www.youtube.com/watch?v=fyS69M8kON4">
+        <img src="Images/video2_thumbnail.png" width="400">
+      </a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <b>Occlusion Scenario</b><br>
+      <a href="https://www.youtube.com/watch?v=8c4z4JQcgRI">
+        <img src="Images/video3_thumbnail.png" width="400">
+      </a>
+    </td>
+    <td align="center">
+      <b>Identity Preservation</b><br>
+      <a href="https://www.youtube.com/watch?v=I24V1gQmYpA">
+        <img src="Images/video4_thumbnail.png" width="400">
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Table of Contents
 - Repository Structure
 - Installation
