@@ -40,12 +40,12 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
   <tr>
     <td><video src="Videos/761901372_cam2_1.mp4" width="400" controls></video></td>
     <!-- <td><video src="Videos/imm_byte.mp4" width="400" controls></video></td> -->
-  </tr>
+  <!-- </tr> -->
   <!-- <tr>
     <td><video src="Videos/scenario1.mp4" width="400" controls></video></td>
     <td><video src="Videos/scenario2.mp4" width="400" controls></video></td>
   </tr> -->
-</table> -->
+<!-- </table> --> -->
 ## Table of Contents
 - Repository Structure
 - Installation
