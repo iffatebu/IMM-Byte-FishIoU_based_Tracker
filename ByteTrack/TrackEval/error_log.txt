@@ -1,0 +1,70 @@
+MotChallenge2DBox
+
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/_timing.py", line 64, in wrap
+    return f(*args, **kw)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/eval.py", line 195, in eval_sequence
+    data = dataset.get_preprocessed_seq_data(raw_data, cls)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/_timing.py", line 64, in wrap
+    return f(*args, **kw)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/datasets/mot_challenge_2d_box.py", line 352, in get_preprocessed_seq_data
+    raise TrackEvalException(
+trackeval.utils.TrackEvalException: Evaluation is only valid for pedestrian class. Non pedestrian class (2) found in sequence brackishMOT-17 at timestep 0.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/eval.py", line 81, in evaluate
+    results = pool.map(_eval_sequence, seq_list)
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 364, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 771, in get
+    raise self._value
+trackeval.utils.TrackEvalException: Evaluation is only valid for pedestrian class. Non pedestrian class (2) found in sequence brackishMOT-17 at timestep 0.
+
+
+
+
+
+MotChallenge2DBox
+
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/_timing.py", line 64, in wrap
+    return f(*args, **kw)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/eval.py", line 195, in eval_sequence
+    data = dataset.get_preprocessed_seq_data(raw_data, cls)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/_timing.py", line 64, in wrap
+    return f(*args, **kw)
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/datasets/mot_challenge_2d_box.py", line 352, in get_preprocessed_seq_data
+    raise TrackEvalException(
+trackeval.utils.TrackEvalException: Evaluation is only valid for pedestrian class. Non pedestrian class (2) found in sequence brackishMOT-10 at timestep 38.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/morrill/users/ie93/ByteTrack/TrackEval/trackeval/eval.py", line 81, in evaluate
+    results = pool.map(_eval_sequence, seq_list)
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 364, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3/envs/bytetrack_nw/lib/python3.9/multiprocessing/pool.py", line 771, in get
+    raise self._value
+trackeval.utils.TrackEvalException: Evaluation is only valid for pedestrian class. Non pedestrian class (2) found in sequence brackishMOT-10 at timestep 38.
+
+
+
+
+

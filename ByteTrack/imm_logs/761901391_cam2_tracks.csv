@@ -1,0 +1,8 @@
+track_id,n_frames,mean_mu_CV,mean_mu_CA,mu_flips,cv_dominant,needs_CT
+49,90,0.615,0.385,4,True,False
+51,86,0.596,0.404,6,False,False
+52,7,0.596,0.404,3,False,True
+53,9,0.623,0.377,0,True,False
+54,12,0.625,0.375,2,True,False
+55,40,0.605,0.395,8,True,False
+57,13,0.491,0.509,2,False,False

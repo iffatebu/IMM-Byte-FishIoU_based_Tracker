@@ -1,0 +1,6 @@
+Actual tracker folder: tracker_my_original_bytetrackModel
+Actual evaluators folder: evaluators_my_original_bytetrackModel
+
+For dancetrack: tracker
+For dancetrack: evaluators
+
