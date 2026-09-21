@@ -367,4 +367,38 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 <frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
 ~~~
+## Training 
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack ROOT}/ByteTrack/pretrained.
+## Train custom dataset
+First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
+~~~
+cd {ByteTrack ROOT}/ByteTrack
+python3 tools/train.py -f exps/example/mot/yolox_x_ablation.py -d 8 -b 48 --fp16 -o -c pretrained/yolox_x.pth
+~~~
+If you running it in HPC cluster then you have to run sbatch file instead of this command in the terminal and the sbatch script is-
+```
+ByteTrack/training_YOLOX.sbatch
+```
 
+## Tracking
+
+* **Evaluation on your custom dataset**
+
+Run ByteTrack:
+
+```
+cd <ByteTrack_HOME>
+python3 tools/demo_updated_all_singleClassTrack.py images -f exps/example/mot/yolox_x_ablation.py -c pretrained/best_ckpt.pth.tar --fp16 --fuse --save_result
+
+```
+You can get 76.6 MOTA using our pretrained model.
+The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
+
+## Demo
+
+<img src="assets/palace_demo.gif" width="600"/>
+
+```shell
+cd <ByteTrack_HOME>
+python3 tools/demo_track.py video -f exps/example/mot/yolox_x_mix_det.py -c pretrained/bytetrack_x_mot17.pth.tar --fp16 --fuse --save_result
+```
