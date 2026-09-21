@@ -325,3 +325,36 @@ Verification: Output should print YOLOX OK.
 Ensure PyTorch detects CUDA acceleration inside the environment:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
+
+## Dataset
+Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
+
+Organize as follows:
+~~~
+{DanceTrack ROOT}
+|-- dancetrack
+|   |-- train
+|   |   |-- dancetrack0001
+|   |   |   |-- img1
+|   |   |   |   |-- 00000001.jpg
+|   |   |   |   |-- ...
+|   |   |   |-- gt
+|   |   |   |   |-- gt.txt            
+|   |   |   |-- seqinfo.ini
+|   |   |-- ...
+|   |-- val
+|   |   |-- ...
+|   |-- test
+|   |   |-- ...
+|   |-- train_seqmap.txt
+|   |-- val_seqmap.txt
+|   |-- test_seqmap.txt
+|-- TrackEval
+|-- tools
+|-- ...
+~~~
+We align our dataset annotations with MOT, so each line in  gt.txt contains:
+~~~
+<frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
+~~~
+
