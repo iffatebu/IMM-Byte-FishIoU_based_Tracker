@@ -257,7 +257,7 @@ This section covers the step-by-step setup for running **ByteTrack** on the **Mo
 ### Prerequisites & SLURM Allocation
 Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
 
-bash
+```bash
 # Option 1: Development node (for installation setup without GPU)
 srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
 
