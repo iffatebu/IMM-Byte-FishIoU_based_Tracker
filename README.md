@@ -264,14 +264,14 @@ srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty ba
 # Option 2: GPU node (if you require an active GPU during setup/testing)
 srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 ```
-# Step 1: Load CUDA Module
-Check available CUDA modules and load CUDA 12.9:
-bash
+Step1. Check available CUDA modules and load CUDA 12.9:
+```
 module avail cuda
 module load cuda/12.9
+```
 
-# Step 2: Set Up Python Environment
-bash
+Step 2. Set Up Python Environment
+```
 # Configure environment and cache paths on scratch space
 export SCR=/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3
 export CONDA_PKGS_DIRS=$SCR/pkgs
@@ -280,39 +280,33 @@ export PIP_CACHE_DIR=$SCR/pip_cache
 export TMPDIR=$SCR/tmp
 
 # Create and activate environment
-bash
 conda create -y -p $SCR/envs/bytetrack python=3.8
 conda activate $SCR/envs/bytetrack
+```
 
-# Step 3: Install CUDA-Matched PyTorch
-bash
-Install PyTorch build compatible with CUDA 12.9:
+Step 3. Install PyTorch build compatible with CUDA 12.9:
+```
 pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu129](https://download.pytorch.org/whl/cu129)
 
 # Verify PyTorch CUDA support:
-bash
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
-
-# Step 4: Install ByteTrack Dependencies
-Clone the repository and build the required dependencies:
-# Clone repository and build setup
-bash
+```
+Step 4. Clone the repository and build the required dependencies:
+```
 git clone [https://github.com/ifzhang/ByteTrack.git](https://github.com/ifzhang/ByteTrack.git)
 cd ByteTrack
 pip install -r requirements.txt
 python setup.py develop
 
 # Install pycocotools
-bash
 pip install cython
 pip install 'git+[https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI](https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI)'
 
 # Install Cython bbox utilities
-bash
 pip install cython_bbox
-
-# Step 5: VerificationRun the following verification checks on an active GPU node:
-bash
+```
+Step 5. VerificationRun the following verification checks on an active GPU node:
+```
 1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
 nvidia-smi
 Verification: Should output active GPU information (e.g., NVIDIA A100).
@@ -321,11 +315,10 @@ Verification: Should output active GPU information (e.g., NVIDIA A100).
 python -c "import yolox; print('YOLOX OK')"
 Verification: Output should print YOLOX OK.
 
-3.Verify PyTorch GPU Support:
-Ensure PyTorch detects CUDA acceleration inside the environment:
+3.Verify PyTorch GPU Support: Ensure PyTorch detects CUDA acceleration inside the environment:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
-
+```
 ## Dataset
 Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
 Convert annotations to coco format:
