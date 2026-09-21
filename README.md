@@ -266,9 +266,10 @@ srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres
 ```
 * **Step 1: Load CUDA Module**
 Check available CUDA modules and load CUDA 12.9:
-bash
+```
 module avail cuda
 module load cuda/12.9
+```
 
 # Step 2: Set Up Python Environment
 bash
