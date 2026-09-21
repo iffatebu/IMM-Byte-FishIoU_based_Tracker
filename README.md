@@ -396,7 +396,7 @@ The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
 
 ## Demo
 
-<img src="assets/palace_demo.gif" width="600"/>
+<img src="assets/761901372_cam2_1.gif" width="900"/>
 
 ```shell
 cd <ByteTrack_HOME>
