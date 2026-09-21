@@ -264,7 +264,7 @@ srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty ba
 # Option 2: GPU node (if you require an active GPU during setup/testing)
 srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 
-Step 1: Load CUDA Module
+### Step 1: Load CUDA Module
 Check available CUDA modules and load CUDA 12.9:
 module avail cuda
 module load cuda/12.9
