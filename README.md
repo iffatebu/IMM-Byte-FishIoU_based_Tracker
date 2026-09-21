@@ -328,29 +328,39 @@ Verification: Output should return True.
 
 ## Dataset
 Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
-
+Convert annotations to coco format:
+```
+cd {ByteTrack ROOT}
+python3 tools/convert_mot17_to_coco.py
+cd ByteTrack/datasets
+ln -s ../../mot mot_train
+cd ..
 Organize as follows:
 ~~~
-{DanceTrack ROOT}
-|-- dancetrack
+{ByteTrack ROOT}
+|-- mot
 |   |-- train
-|   |   |-- dancetrack0001
+|   |   |-- VID_Name
 |   |   |   |-- img1
-|   |   |   |   |-- 00000001.jpg
+|   |   |   |   |-- 000001.jpg
 |   |   |   |   |-- ...
 |   |   |   |-- gt
 |   |   |   |   |-- gt.txt            
 |   |   |   |-- seqinfo.ini
 |   |   |-- ...
-|   |-- val
-|   |   |-- ...
 |   |-- test
-|   |   |-- ...
-|   |-- train_seqmap.txt
-|   |-- val_seqmap.txt
+|   |   |-- VID_Name
+|   |   |   |-- img1
+|   |   |   |   |-- 000001.jpg
+|   |   |   |   |-- ...
+|   |   |   |-- gt
+|   |   |   |   |-- gt.txt            
+|   |   |   |-- seqinfo.ini
 |   |-- test_seqmap.txt
-|-- TrackEval
-|-- tools
+|   |-- annotations
+|       |-- train.json
+|       |-- val.json
+        |-- test.json
 |-- ...
 ~~~
 We align our dataset annotations with MOT, so each line in  gt.txt contains:
