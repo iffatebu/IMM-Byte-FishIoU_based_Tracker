@@ -282,16 +282,17 @@ export TMPDIR=$SCR/tmp
 # Create and activate environment
 conda create -y -p $SCR/envs/bytetrack python=3.8
 conda activate $SCR/envs/bytetrack
+```
 
-Step 3. Install CUDA-Matched PyTorch
-Install PyTorch build compatible with CUDA 12.9:
+Step 3. Install PyTorch build compatible with CUDA 12.9:
+```
 pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu129](https://download.pytorch.org/whl/cu129)
 
 # Verify PyTorch CUDA support:
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
-
+```
 Step 4. Clone the repository and build the required dependencies:
-# Clone repository and build setup
+```
 git clone [https://github.com/ifzhang/ByteTrack.git](https://github.com/ifzhang/ByteTrack.git)
 cd ByteTrack
 pip install -r requirements.txt
@@ -303,8 +304,9 @@ pip install 'git+[https://github.com/cocodataset/cocoapi.git#subdirectory=Python
 
 # Install Cython bbox utilities
 pip install cython_bbox
-
+```
 Step 5. VerificationRun the following verification checks on an active GPU node:
+```
 1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
 nvidia-smi
 Verification: Should output active GPU information (e.g., NVIDIA A100).
@@ -313,8 +315,7 @@ Verification: Should output active GPU information (e.g., NVIDIA A100).
 python -c "import yolox; print('YOLOX OK')"
 Verification: Output should print YOLOX OK.
 
-3.Verify PyTorch GPU Support:
-Ensure PyTorch detects CUDA acceleration inside the environment:
+3.Verify PyTorch GPU Support: Ensure PyTorch detects CUDA acceleration inside the environment:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
 ```
