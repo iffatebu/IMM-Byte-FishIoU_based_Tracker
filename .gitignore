@@ -1,12 +1,11 @@
-# Model weights
+# Only ignore large model files
 *.pth
 *.pth.tar
 
 # Training outputs
 ByteTrack/YOLOX_outputs/
 
-# Large assets
-assets/*.gif
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
