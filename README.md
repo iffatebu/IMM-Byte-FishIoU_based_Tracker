@@ -247,3 +247,17 @@ Contact
 <!-- FILL IN: your email or lab page, for marine biologists who may want to reach out about using the tool on their own survey footage -->
 
 For questions about using this tool on your own survey data, open an issue or contact <!-- FILL IN -->.
+
+## Installation
+
+This section covers the step-by-step setup for running **ByteTrack** on the **Morrill HPC** cluster.
+
+### Prerequisites & SLURM Allocation
+Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
+
+```bash
+# Option 1: Development node (for installation setup without GPU)
+srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
+
+# Option 2: GPU node (if you require an active GPU during setup/testing)
+srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
