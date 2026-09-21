@@ -257,19 +257,21 @@ This section covers the step-by-step setup for running **ByteTrack** on the **Mo
 ### Prerequisites & SLURM Allocation
 Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
 
-```bash
+bash
 # Option 1: Development node (for installation setup without GPU)
 srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
 
 # Option 2: GPU node (if you require an active GPU during setup/testing)
 srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 
-#Step 1: Load CUDA Module
+# Step 1: Load CUDA Module
 Check available CUDA modules and load CUDA 12.9:
+bash
 module avail cuda
 module load cuda/12.9
 
-Step 2: Set Up Python Environment
+# Step 2: Set Up Python Environment
+bash
 # Configure environment and cache paths on scratch space
 export SCR=/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3
 export CONDA_PKGS_DIRS=$SCR/pkgs
@@ -278,32 +280,39 @@ export PIP_CACHE_DIR=$SCR/pip_cache
 export TMPDIR=$SCR/tmp
 
 # Create and activate environment
+bash
 conda create -y -p $SCR/envs/bytetrack python=3.8
 conda activate $SCR/envs/bytetrack
 
-Step 3: Install CUDA-Matched PyTorch
+# Step 3: Install CUDA-Matched PyTorch
+bash
 Install PyTorch build compatible with CUDA 12.9:
 pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu129](https://download.pytorch.org/whl/cu129)
 
-Verify PyTorch CUDA support:
+# Verify PyTorch CUDA support:
+bash
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
 
-Step 4: Install ByteTrack Dependencies
+# Step 4: Install ByteTrack Dependencies
 Clone the repository and build the required dependencies:
 # Clone repository and build setup
+bash
 git clone [https://github.com/ifzhang/ByteTrack.git](https://github.com/ifzhang/ByteTrack.git)
 cd ByteTrack
 pip install -r requirements.txt
 python setup.py develop
 
 # Install pycocotools
+bash
 pip install cython
 pip install 'git+[https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI](https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI)'
 
 # Install Cython bbox utilities
+bash
 pip install cython_bbox
 
-Step 5: VerificationRun the following verification checks on an active GPU node:
+# Step 5: VerificationRun the following verification checks on an active GPU node:
+bash
 1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
 nvidia-smi
 Verification: Should output active GPU information (e.g., NVIDIA A100).
@@ -316,8 +325,3 @@ Verification: Output should print YOLOX OK.
 Ensure PyTorch detects CUDA acceleration inside the environment:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
-
-<ElicitationsGroup message="Would you like to add any additional sections to your README?">
-  <Elicitation label="Add SLURM Batch Script Template" query="Can you provide a SLURM batch job submission script (.sh) template for running ByteTrack inference/training on Morrill HPC?"/>
-  <Elicitation label="Add Data Preparation Section" query="Can you generate a README section template for Dataset Preparation and directory structuring for ByteTrack?"/>
-</ElicitationsGroup>
