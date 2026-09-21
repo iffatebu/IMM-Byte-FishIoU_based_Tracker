@@ -265,6 +265,7 @@ srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty ba
 srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 ```
 * **Step 1: Load CUDA Module**
+Step1. Install ByteTrack.
 Check available CUDA modules and load CUDA 12.9:
 ```
 module avail cuda
