@@ -328,8 +328,9 @@ python3 tools/convert_mot17_to_coco.py
 cd ByteTrack/datasets
 ln -s ../../mot mot_train
 cd ..
+```
 Organize as follows:
-~~~
+```
 {ByteTrack ROOT}
 |-- mot
 |   |-- train
@@ -355,7 +356,7 @@ Organize as follows:
 |       |-- val.json
         |-- test.json
 |-- ...
-~~~
+```
 We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 <frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
