@@ -194,6 +194,8 @@ Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (20
 # 3. Two-stage association (unchanged from ByteTrack)
 We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
 
+
+
 # Usage
 # Run tracking on a video/sequence
 bash
@@ -247,3 +249,156 @@ Contact
 <!-- FILL IN: your email or lab page, for marine biologists who may want to reach out about using the tool on their own survey footage -->
 
 For questions about using this tool on your own survey data, open an issue or contact <!-- FILL IN -->.
+
+## Installation
+
+This section covers the step-by-step setup for running **ByteTrack** on the **Morrill HPC** cluster.
+
+### Prerequisites & SLURM Allocation
+Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
+
+```bash
+# Option 1: Development node (for installation setup without GPU)
+srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
+
+# Option 2: GPU node (if you require an active GPU during setup/testing)
+srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
+```
+# Step 1: Load CUDA Module
+Check available CUDA modules and load CUDA 12.9:
+bash
+module avail cuda
+module load cuda/12.9
+
+# Step 2: Set Up Python Environment
+bash
+# Configure environment and cache paths on scratch space
+export SCR=/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3
+export CONDA_PKGS_DIRS=$SCR/pkgs
+export CONDA_ENVS_DIRS=$SCR/envs
+export PIP_CACHE_DIR=$SCR/pip_cache
+export TMPDIR=$SCR/tmp
+
+# Create and activate environment
+bash
+conda create -y -p $SCR/envs/bytetrack python=3.8
+conda activate $SCR/envs/bytetrack
+
+# Step 3: Install CUDA-Matched PyTorch
+bash
+Install PyTorch build compatible with CUDA 12.9:
+pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu129](https://download.pytorch.org/whl/cu129)
+
+# Verify PyTorch CUDA support:
+bash
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
+
+# Step 4: Install ByteTrack Dependencies
+Clone the repository and build the required dependencies:
+# Clone repository and build setup
+bash
+git clone [https://github.com/ifzhang/ByteTrack.git](https://github.com/ifzhang/ByteTrack.git)
+cd ByteTrack
+pip install -r requirements.txt
+python setup.py develop
+
+# Install pycocotools
+bash
+pip install cython
+pip install 'git+[https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI](https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI)'
+
+# Install Cython bbox utilities
+bash
+pip install cython_bbox
+
+# Step 5: VerificationRun the following verification checks on an active GPU node:
+bash
+1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
+nvidia-smi
+Verification: Should output active GPU information (e.g., NVIDIA A100).
+
+2.Verify YOLOX Integration:Confirm YOLOX modules are properly linked:
+python -c "import yolox; print('YOLOX OK')"
+Verification: Output should print YOLOX OK.
+
+3.Verify PyTorch GPU Support:
+Ensure PyTorch detects CUDA acceleration inside the environment:
+python -c "import torch; print(torch.cuda.is_available())"
+Verification: Output should return True.
+
+## Dataset
+Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
+Convert annotations to coco format:
+```
+cd {ByteTrack ROOT}
+python3 tools/convert_mot17_to_coco.py
+cd ByteTrack/datasets
+ln -s ../../mot mot_train
+cd ..
+Organize as follows:
+~~~
+{ByteTrack ROOT}
+|-- mot
+|   |-- train
+|   |   |-- VID_Name
+|   |   |   |-- img1
+|   |   |   |   |-- 000001.jpg
+|   |   |   |   |-- ...
+|   |   |   |-- gt
+|   |   |   |   |-- gt.txt            
+|   |   |   |-- seqinfo.ini
+|   |   |-- ...
+|   |-- test
+|   |   |-- VID_Name
+|   |   |   |-- img1
+|   |   |   |   |-- 000001.jpg
+|   |   |   |   |-- ...
+|   |   |   |-- gt
+|   |   |   |   |-- gt.txt            
+|   |   |   |-- seqinfo.ini
+|   |-- test_seqmap.txt
+|   |-- annotations
+|       |-- train.json
+|       |-- val.json
+        |-- test.json
+|-- ...
+~~~
+We align our dataset annotations with MOT, so each line in  gt.txt contains:
+~~~
+<frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
+~~~
+## Training 
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack ROOT}/ByteTrack/pretrained.
+## Train custom dataset
+First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
+~~~
+cd {ByteTrack ROOT}/ByteTrack
+python3 tools/train.py -f exps/example/mot/yolox_x_ablation.py -d 8 -b 48 --fp16 -o -c pretrained/yolox_x.pth
+~~~
+If you running it in HPC cluster then you have to run sbatch file instead of this command in the terminal and the sbatch script is-
+```
+ByteTrack/training_YOLOX.sbatch
+```
+
+## Tracking
+
+* **Evaluation on your custom dataset**
+
+Run ByteTrack:
+
+```
+cd <ByteTrack_HOME>
+python3 tools/demo_updated_all_singleClassTrack.py images -f exps/example/mot/yolox_x_ablation.py -c pretrained/best_ckpt.pth.tar --fp16 --fuse --save_result
+
+```
+You can get 76.6 MOTA using our pretrained model.
+The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
+
+## Demo
+
+<img src="assets/761901372_cam2_1.gif" width="900"/>
+
+```shell
+cd <ByteTrack_HOME>
+python3 tools/demo_track.py video -f exps/example/mot/yolox_x_mix_det.py -c pretrained/bytetrack_x_mot17.pth.tar --fp16 --fuse --save_result
+```
