@@ -252,7 +252,7 @@ For questions about using this tool on your own survey data, open an issue or co
 
 ## Installation
 
-This section covers the step-by-step setup for running **ByteTrack** on the **Morrill HPC** cluster.
+This section covers the step-by-step setup for running **ByteTrack** on the **HPC** cluster. If you want to create this environment in usual GPU system then please follow the instruction process on original [ByteTrack](https://github.com/FoundationVision/ByteTrack#installation)
 
 ### Prerequisites & SLURM Allocation
 Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
