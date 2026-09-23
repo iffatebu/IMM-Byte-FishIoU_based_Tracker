@@ -252,17 +252,17 @@ For questions about using this tool on your own survey data, open an issue or co
 
 ## Installation
 
-This section covers the step-by-step setup for running **ByteTrack** on the **HPC** cluster. If you want to create this environment in usual GPU system then please follow the instruction process on original [ByteTrack](https://github.com/FoundationVision/ByteTrack#installation)
+This section covers the step-by-step setup for running **ByteTrack** on the **HPC** cluster. If you want to create this environment in usual GPU system then please follow the installation process in original [ByteTrack](https://github.com/FoundationVision/ByteTrack#installation)
 
 ### Prerequisites & SLURM Allocation
 Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
 
 ```bash
-# Option 1: Development node (for installation setup without GPU)
+# Option 1: Development node (for installation setup without GPU)[modify the account and partition information based on your available information]
 srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
 
 # Option 2: GPU node (if you require an active GPU during setup/testing)
-srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=05:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
+srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=01:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 ```
 Step1. Check available CUDA modules and load CUDA 12.9:
 ```
@@ -272,7 +272,7 @@ module load cuda/12.9
 
 Step 2. Set Up Python Environment
 ```
-# Configure environment and cache paths on scratch space
+# Configure environment and cache paths on scratch space (modify the directory according to your location)  
 export SCR=/scratch/morrill/users/ie93/Environment_PyTorch/miniconda3
 export CONDA_PKGS_DIRS=$SCR/pkgs
 export CONDA_ENVS_DIRS=$SCR/envs
@@ -280,33 +280,38 @@ export PIP_CACHE_DIR=$SCR/pip_cache
 export TMPDIR=$SCR/tmp
 
 # Create and activate environment
-conda create -y -p $SCR/envs/bytetrack python=3.8
+conda create -y -p $SCR/envs/bytetrack python=3.9
 conda activate $SCR/envs/bytetrack
 ```
 
 Step 3. Install PyTorch build compatible with CUDA 12.9:
 ```
-pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu129](https://download.pytorch.org/whl/cu129)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
-# Verify PyTorch CUDA support:
+# Verify PyTorch CUDA support:(If you are not in GPU node then print(torch.cuda.is_available()) could give you False but that's okay)
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
 ```
 Step 4. Clone the repository and build the required dependencies:
 ```
-git clone [https://github.com/ifzhang/ByteTrack.git](https://github.com/ifzhang/ByteTrack.git)
+cd /scratch/morrill/users/ie93 [Directory where I want to keep all the files]
+git clone https://github.com/FoundationVision/ByteTrack.git
 cd ByteTrack
-pip install -r requirements.txt
-python setup.py develop
+pip install -r requirements.txt [Update this .txt file with this repo, [eventually need to work this repo, so users can clone mine one perfectly]
+Problem-python3 setup.py develop [Therefore below command]
+pip install -e . --no-build-isolation
 
 # Install pycocotools
-pip install cython
-pip install 'git+[https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI](https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI)'
+pip install cython;
+Problem-  pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI' [Therefore below command]
+pip install numpy 
+pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI' --no-build-isolation 
 
 # Install Cython bbox utilities
 pip install cython_bbox
 ```
-Step 5. VerificationRun the following verification checks on an active GPU node:
+Step 5. Verification: Run the following verification checks on an active GPU node:
 ```
+This number 1 will not work since in development node for installation
 1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
 nvidia-smi
 Verification: Should output active GPU information (e.g., NVIDIA A100).
