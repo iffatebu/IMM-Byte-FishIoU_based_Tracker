@@ -312,19 +312,22 @@ Step 5. Verification: Run the following verification checks on an active GPU nod
 python -c "import yolox; print('YOLOX OK')"
 Verification: Output should print YOLOX OK.
 
-2.Verify PyTorch GPU Support: Need to enter in GPU node by this command (modify the account and partition information based on your available information). You can get our from development node using this command-
-a) For checking active job id:
+2.Verify PyTorch GPU Support: You can get our from development node before entering into GPU node following these steps-
+a) For checking active job id and canceling the job before logging into GPU node:
 squeue - u $USER (cheking active job with Job ID, here use your user name instead of $USER)
-b) Then cancel this job before logging into GPU node-
 scancel <Job ID>
-c) Then login into the GPU node-
+
+c) Command for logging into the GPU node (modify the account and partition information based on your available information). 
 srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=01:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
+
 d) Check GPU Availability:
 nvidia-smi
+
 e) Verification:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
-f) If want to log out again from GPU resource (Otherwise it will hold the GPU which is not getting used)
+
+f) If currently you don't intend to work, log out again from GPU resource (Otherwise it will hold the GPU which is not getting used)
 squeue - u $USER (cheking active job with Job ID)
 scancel <Job ID>
 ```
