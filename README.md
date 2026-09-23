@@ -258,11 +258,8 @@ This section covers the step-by-step setup for running **ByteTrack** on the **HP
 Do not install GPU packages directly on the login node. First, request an interactive compute node allocation using SLURM:
 
 ```bash
-# Option 1: Development node (for installation setup without GPU)[modify the account and partition information based on your available information]
+Development node (for installation setup without GPU)(modify the account and partition information based on your available information)
 srun --account=partner-ngi --partition=development --nodes=1 --ntasks=1 --pty bash
-
-# Option 2: GPU node (if you require an active GPU during setup/testing)
-srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=01:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
 ```
 Step1. Check available CUDA modules and load CUDA 12.9:
 ```
@@ -311,18 +308,25 @@ pip install cython_bbox
 ```
 Step 5. Verification: Run the following verification checks on an active GPU node:
 ```
-This number 1 will not work since in development node for installation
-1.Check GPU Availability:Ensure the GPU driver detects the allocated accelerator:
-nvidia-smi
-Verification: Should output active GPU information (e.g., NVIDIA A100).
-
-2.Verify YOLOX Integration:Confirm YOLOX modules are properly linked:
+1.Verify YOLOX modules are properly linked:
 python -c "import yolox; print('YOLOX OK')"
 Verification: Output should print YOLOX OK.
 
-3.Verify PyTorch GPU Support: Ensure PyTorch detects CUDA acceleration inside the environment:
+2.Verify PyTorch GPU Support: Need to enter in GPU node by this command (modify the account and partition information based on your available information). You can get our from development node using this command-
+a) For checking active job id:
+squeue - u $USER (cheking active job with Job ID, here use your user name instead of $USER)
+b) Then cancel this job before logging into GPU node-
+scancel <Job ID>
+c) Then login into the GPU node-
+srun --account=partner-ngi --partition=gpu-a100 --nodes=1 --time=01:00:00 --gres=gpu:a100:1 --ntasks=1 --pty bash
+d) Check GPU Availability:
+nvidia-smi
+e) Verification:
 python -c "import torch; print(torch.cuda.is_available())"
 Verification: Output should return True.
+f) If want to log out again from GPU resource (Otherwise it will hold the GPU which is not getting used)
+squeue - u $USER (cheking active job with Job ID)
+scancel <Job ID>
 ```
 ## Dataset
 Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
