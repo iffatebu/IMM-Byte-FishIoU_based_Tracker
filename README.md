@@ -373,7 +373,7 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 <frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
 ~~~
---!>
+-->
 ## Training 
 The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack ROOT}/ByteTrack/pretrained.
 ## Train custom dataset
