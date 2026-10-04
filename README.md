@@ -64,6 +64,7 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
   </tr>
 </table>
 
+<!--
 ## Table of Contents
 - Repository Structure
 - Installation
@@ -74,7 +75,7 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 - Results
 - Citation
 - Acknowledgments
-
+-->
 ## Repository Structure
 
 ```text
