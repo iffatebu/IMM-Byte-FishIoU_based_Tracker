@@ -332,8 +332,8 @@ squeue - u $USER (cheking active job with Job ID)
 scancel <Job ID>
 ```
 ## Dataset
-Download the dataset from [Hugging Face](https://huggingface.co/datasets/noahcao/dancetrack), Google Drive (deprecated, use HuggingFance instead) or [Baidu Drive](https://pan.baidu.com/s/19O3IvYNzzrcLqlODHKYUwA) (code:awew).
-Convert annotations to coco format:
+Initially you can start working with the MOT format dataset described here [ByteTrack/Data preparation] (https://github.com/FoundationVision/ByteTrack#data-preparation) in detail. Then in the similar way any custom data can be possible to make ready for this tracking algorithm.
+<!--- Convert annotations to coco format:
 ```
 cd {ByteTrack ROOT}
 python3 tools/convert_mot17_to_coco.py
@@ -373,6 +373,7 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 <frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, 1, 1, 1
 ~~~
+---!>
 ## Training 
 The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack ROOT}/ByteTrack/pretrained.
 ## Train custom dataset
