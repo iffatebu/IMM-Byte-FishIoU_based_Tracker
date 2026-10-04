@@ -332,7 +332,7 @@ squeue - u $USER (cheking active job with Job ID)
 scancel <Job ID>
 ```
 ## Dataset
-Initially you can start working with the MOT format dataset described here [ByteTrack/Data preparation] (https://github.com/FoundationVision/ByteTrack#data-preparation) in detail. Then in the similar way any custom data can be possible to make ready for this tracking algorithm.
+Initially you can start working with the MOT format dataset described here [ByteTrack/Data preparation](https://github.com/FoundationVision/ByteTrack#data-preparation) in detail. Then in the similar way any custom data can be possible to make ready for this tracking algorithm.
 <!-- Convert annotations to coco format:
 ```
 cd {ByteTrack ROOT}
