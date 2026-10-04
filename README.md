@@ -409,3 +409,7 @@ The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
 cd <ByteTrack_HOME>
 python3 tools/demo_track.py video -f exps/example/mot/yolox_x_mix_det.py -c pretrained/bytetrack_x_mot17.pth.tar --fp16 --fuse --save_result
 ```
+
+## Acknowledgement
+A large part of the code is borrowed from [ByteTrack](https://github.com/FoundationVision/ByteTrack). Many thanks for their wonderful works.
+
