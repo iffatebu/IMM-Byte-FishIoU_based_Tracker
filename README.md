@@ -31,6 +31,7 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 | MT ↑ | 101  | 215 |	399 | 387 | **403** |
 | ML ↓ | 485 | 297 |	233 | 233 | **219** |
 
+# Visualization results on custom GFISHERED24 test set
 <table>
   <tr>
     <td align="center">
