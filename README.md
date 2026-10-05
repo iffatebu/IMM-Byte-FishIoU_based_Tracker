@@ -172,7 +172,7 @@ IMM-Byte/
 |GPU | 	NVIDIA A100 (80GB)?? |
 
 #Pretrained weights
-<!-- FILL IN: this section is critical for reproducibility. For each weight file, specify: --> <!-- - what it is, what dataset it was trained on, where to download it, and its license -->
+# FILL IN: this section is critical for reproducibility. For each weight file, specify: what it is, what dataset it was trained on, where to download it, and its license 
 | Weight | Description | Trained on | Download | License
 | --- | --- | --- | --- | --- |
 | - | - | - | - | - |
