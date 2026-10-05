@@ -81,11 +81,11 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 ```text
 IMM-Byte/
 │
-├── detector directory [/scratch/morrill/users/ie93/ByteTrack/exps/example/mot]/
+├── detector directory [IMM-Byte-FishIoU_based_Tracker/ByteTrack/exps/example/mot]/
 │   └── yolox_x_ablation_fish.py
 │       # YOLOX-X detector configuration
 │
-├── tracker directory [/scratch/morrill/users/ie93/ByteTrack/yolox/tracker]/
+├── tracker directory [IMM-Byte-FishIoU_based_Tracker/ByteTrack/yolox/tracker]/
 │   ├── byte_tracker.py
 │   │   # Modified ByteTrack tracking and association logic
 │   │
@@ -99,11 +99,7 @@ IMM-Byte/
 │   └── kalman_filter.py
 │       # Original single-model Kalman Filter
 │
-├── weights directory [/scratch/morrill/users/ie93/ByteTrack/pretrained]/
-│   └── yolox_x.pth
-|       # Directory for pretrained model weights
-│
-├── tools/
+├── IMM-Byte-FishIoU_based_Tracker/ByteTrack/tools/
 │   ├── train.py
 │   │   # Detector training script
 │   │
@@ -122,9 +118,8 @@ IMM-Byte/
 ├── datasets/
 │   └── README.md
 │       # Dataset preparation and setup instructions
-│       # for GFISHERD24 and DanceTrack
-|
-├── Train_Test_Split [/scratch/morrill/users/ie93/ByteTrack/exps/example/mot]/
+│       
+├── Train_Test_Split [IMM-Byte-FishIoU_based_Tracker/]/
 |   ├── videos_name_train.txt
 │   │   # This videos of GFISHERED24 used for training purposes
 │   ├── videos_name_test.txt
