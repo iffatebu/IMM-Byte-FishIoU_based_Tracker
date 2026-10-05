@@ -123,6 +123,12 @@ IMM-Byte/
 │   └── README.md
 │       # Dataset preparation and setup instructions
 │       # for GFISHERD24 and DanceTrack
+|
+├── Train_Test_Split [/scratch/morrill/users/ie93/ByteTrack/exps/example/mot]/
+|   ├── videos_name_train.txt
+│   │   # This videos of GFISHERED24 used for training purposes
+│   ├── videos_name_test.txt
+│       # This videos of GFISHERED24 used for testing purposes
 │
 ├── training_YOLOX.sbatch
 │   # sbatch training script for cluster
