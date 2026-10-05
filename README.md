@@ -142,7 +142,7 @@ IMM-Byte/
 └── README.md
     # Project documentation
 ```
-
+<!--
 ### Directory and File Descriptions
 
 | Path                           | Description                                                                                                         |
@@ -162,7 +162,7 @@ IMM-Byte/
 | `datasets/README.md`           | Provides instructions for downloading, organizing, and preparing GFISHERD24 and DanceTrack datasets.                |
 | `requirements.txt`             | Lists the Python dependencies required to run the project.                                                          |
 | `README.md`                    | Main documentation for installation, usage, methodology, experiments, and reproduction.                             |
-
+-->
 # Installation
 git clone https://github.com/<your-username>/IMM-Byte.git
 cd IMM-Byte
