@@ -81,31 +81,27 @@ Underwater survey cameras record fish swimming past structural bars, vegetation,
 ```text
 IMM-Byte/
 │
-├── detector/
-│   └── yolox_x_gfisherd.py
-│       # YOLOX-X detector configuration for GFISHERD24
+├── detector directory [/scratch/morrill/users/ie93/ByteTrack/exps/example/mot]/
+│   └── yolox_x_ablation_fish.py
+│       # YOLOX-X detector configuration
 │
-├── tracker/
+├── tracker directory [/scratch/morrill/users/ie93/ByteTrack/yolox/tracker]/
 │   ├── byte_tracker.py
 │   │   # Modified ByteTrack tracking and association logic
 │   │
-│   ├── imm_filter.py
+│   ├── imm_kalman_filter_CA.py
 │   │   # Interacting Multiple Model (IMM) estimator
-│   │   # using Constant Velocity (CV) and Constant Acceleration (CA) models
+│   │   # using Constant Acceleration (CA) models
 │   │
-│   ├── fish_iou.py
+│   ├── matching.py
 │   │   # FishIoU association metric for underwater fish tracking
 │   │
 │   └── kalman_filter.py
 │       # Original single-model Kalman Filter
-│       # retained for baseline comparison and ablation studies
 │
-├── configs/
-│   └── gfisherd24.yaml
-│       # Dataset, detector, and tracking hyperparameters
-│
-├── weights/
-│   # Directory for pretrained model weights
+├── weights directory [/scratch/morrill/users/ie93/ByteTrack/pretrained]/
+│   └── yolox_x.pth
+|       # Directory for pretrained model weights
 │
 ├── tools/
 │   ├── train.py
@@ -114,14 +110,32 @@ IMM-Byte/
 │   ├── track.py
 │   │   # Tracking inference on videos or image sequences
 │   │
-│   └── eval_motmetrics.py
-│       # MOT evaluation for IDF1, MOTA, IDSW, and other metrics
+│   └── Tracking_performance.py
+│   |    # MOT evaluation for IDF1, MOTA, IDSW, and other metrics
+|   |
+|   ├── demo_updated_all_singleClassTrack.py
+│   │   # ???
+│   │
+│   └── demo_updated_all_singleClassTrack_VIDEO.py
+|       # ??
 │
 ├── datasets/
 │   └── README.md
 │       # Dataset preparation and setup instructions
 │       # for GFISHERD24 and DanceTrack
 │
+├── training_YOLOX.sbatch
+│   # sbatch training script for cluster
+│
+└── demo_detection.sbatch
+|   # sbatch demo script for cross-checking the output of the detector
+|
+├── tracking_BYTE_fish.sbatch
+│   # sbatch tracking script for cluster
+│
+└── Tracking_Performance.py
+|    # sbatch tracking performance measurement script
+|
 ├── requirements.txt
 │   # Python dependencies
 │
