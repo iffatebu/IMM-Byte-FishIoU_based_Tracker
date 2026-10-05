@@ -226,7 +226,7 @@ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available
 Step 4. Clone the repository and build the required dependencies:
 ```
 cd /scratch/morrill/users/ie93 [Directory where I want to keep all the files]
-git clone https://github.com/FoundationVision/ByteTrack.git
+git clone https://github.com/iffatebu/IMM-Byte-FishIoU_based_Tracker.git
 cd ByteTrack
 pip install -r requirements.txt [Update this .txt file with this repo, [eventually need to work this repo, so users can clone mine one perfectly]
 Problem-python3 setup.py develop [Therefore below command]
