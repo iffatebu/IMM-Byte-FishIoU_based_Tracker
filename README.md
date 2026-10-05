@@ -162,15 +162,6 @@ IMM-Byte/
 | `datasets/README.md`           | Provides instructions for downloading, organizing, and preparing GFISHERD24 and DanceTrack datasets.                |
 | `requirements.txt`             | Lists the Python dependencies required to run the project.                                                          |
 | `README.md`                    | Main documentation for installation, usage, methodology, experiments, and reproduction.                             |
--->
-# Installation
-git clone https://github.com/<your-username>/IMM-Byte.git
-cd IMM-Byte
-
-conda create -n immbyte python=3.9
-conda activate immbyte
-
-pip install -r requirements.txt
 
 # Tested environment
 | Component | Version
@@ -186,85 +177,7 @@ pip install -r requirements.txt
 | --- | --- | --- | --- | --- |
 | - | - | - | - | - |
 | yolox_x_coco.pth | Original YOLOX-X COCO-pretrained backbone used as initialization | MS COCO | Official YOLOX release |-|
-
-# To use the pretrained weights:
-mkdir weights
-# download yolox_x_gfisherd.pth into weights/
-python tools/track.py --weights weights/yolox_x_gfisherd.pth --source <video_or_sequence>
-
-# What we changed from baseline ByteTrack
-This section is aimed at anyone extending or auditing the code — it summarizes every modification relative to the original ByteTrack repository.
-# 1. Motion model: single Kalman Filter → IMM (CV + CA)
-- Baseline: ByteTrack predicts each track's next position using a single Kalman filter with a constant-velocity (CV) motion assumption (tracker/kalman_filter.py, unmodified, kept for ablation comparisons).
-- Our change: tracker/imm_filter.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters — CV and Constant Acceleration (CA) — and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
-- Why: fish alternate between steady cruising and burst acceleration; a single CV filter lags badly during bursts, causing identity switches.
-- Mode transition matrix used: Π = [[0.95, 0.05], [0.09, 0.91]] (CV↔CA) <!-- FILL IN if you tuned this differently -->
-
-# 2. Association metric: standard IoU → FishIoU
-- Baseline: ByteTrack associates detections to tracks using bounding-box IoU.
-- Our change: tracker/fish_iou.py (new file) implements a modified association cost:
-FishIoU = ω1·IoU + ω2·aspect_ratio_consistency + ω3·area_consistency − ω4·scaled_center_distance
-with ω1=1, ω2=0.2, ω3=0.2, ω4=0.6 (empirically tuned for this dataset).
-
-Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches (see paper Section III-D / Fig. 12).
-# 3. Two-stage association (unchanged from ByteTrack)
-We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
-
-
-
-# Usage
-# Run tracking on a video/sequence
-bash
-python tools/track.py \
-  --weights weights/yolox_x_gfisherd.pth \
-  --source path/to/video_or_sequence \
-  --conf-thresh 0.5 \
-  --output results/
-
-# Evaluate tracking metrics (IDF1, MOTA, IDSW, etc.)
-bash
-python tools/eval_motmetrics.py \
-  --gt path/to/ground_truth \
-  --pred results/ \
-  --output eval_report.txt
-GFISHERD24 — comparison with state-of-the-art trackers
-Method	HOTA↑	DetA↑	AssA↑	IDF1↑	MOTA↑	IDSW↓
-OC-SORT	39.44	32.72	48.30	41.49	<!-- FILL IN: verify against appendix -->	281
-BoT-SORT	46.25	41.65	52.32	52.20	57.50%	439
-ByteTrack	44.32	42.04	47.34	62.28	60.90%	485
-ByteTrack + IMM	45.34	41.96	49.53	64.80	60.78%	318
-IMM-Byte (proposed)	45.08	42.26	48.67	63.70	61.30%	253
-
-Full per-sequence breakdowns are provided in the paper's Appendix and in results/per_sequence/.
-
-DanceTrack — generalization
-Method	HOTA	DetA	AssA	IDF1	MOTA	IDSW↓
-ByteTrack (baseline)	46.00	70.34	30.21	51.38	88.29%	1987
-ByteTrack + IMM	46.23	70.60	30.40	50.95	88.35%	1821
-
-Citation
-
-If you use this code or the GFISHERD24 dataset, please cite:
-
-<!-- FILL IN: final BibTeX once the paper is published/has a DOI -->
-bibtex
-@article{ebu2026immbyte,
-  title   = {Identity-Consistent Multi-Object Tracking via Interacting Multiple
-             Model Kalman Filtering for Fish Species Monitoring},
-  author  = {Ebu, Iffat Ara and Nabi, M M and Moorhead, Robert},
-  journal = {<!-- FILL IN -->},
-  year    = {2026}
-}
-Acknowledgments
-Built on top of ByteTrack (Zhang et al., 2022)
-Detector based on YOLOX (Ge et al., 2021)
-FishIoU formulation adapted from Li et al. (2024), "When trackers date fish"
-GFISHERD24 data collected by NOAA as part of its annual fishery-independent reef fish survey
-<!-- FILL IN: funding sources, lab affiliation, etc. if applicable -->
-Contact
-<!-- FILL IN: your email or lab page, for marine biologists who may want to reach out about using the tool on their own survey footage -->
-
-For questions about using this tool on your own survey data, open an issue or contact <!-- FILL IN -->.
+-->
 
 ## Installation
 
@@ -403,6 +316,56 @@ If you running it in HPC cluster then you have to run sbatch file instead of thi
 ByteTrack/training_YOLOX.sbatch
 ```
 
+# What we changed from baseline ByteTrack
+This section is aimed at anyone extending or auditing the code — it summarizes every modification relative to the original ByteTrack repository.
+# 1. Motion model: single Kalman Filter → IMM (CV + CA)
+- Baseline: ByteTrack predicts each track's next position using a single Kalman filter with a constant-velocity (CV) motion assumption (tracker/kalman_filter.py, unmodified, kept for ablation comparisons).
+- Our change: tracker/imm_filter.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters — CV and Constant Acceleration (CA) — and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
+- Why: fish alternate between steady cruising and burst acceleration; a single CV filter lags badly during bursts, causing identity switches.
+- Mode transition matrix used: Π = [[0.95, 0.05], [0.09, 0.91]] (CV↔CA) <!-- FILL IN if you tuned this differently -->
+
+# 2. Association metric: standard IoU → FishIoU
+- Baseline: ByteTrack associates detections to tracks using bounding-box IoU.
+- Our change: tracker/fish_iou.py (new file) implements a modified association cost:
+FishIoU = ω1·IoU + ω2·aspect_ratio_consistency + ω3·area_consistency − ω4·scaled_center_distance
+with ω1=1, ω2=0.2, ω3=0.2, ω4=0.6 (empirically tuned for this dataset).
+
+Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches (see paper Section III-D / Fig. 12).
+# 3. Two-stage association (unchanged from ByteTrack)
+We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
+
+
+
+# Usage
+# Run tracking on a video/sequence
+bash
+python tools/track.py \
+  --weights weights/yolox_x_gfisherd.pth \
+  --source path/to/video_or_sequence \
+  --conf-thresh 0.5 \
+  --output results/
+
+# Evaluate tracking metrics (IDF1, MOTA, IDSW, etc.)
+bash
+python tools/eval_motmetrics.py \
+  --gt path/to/ground_truth \
+  --pred results/ \
+  --output eval_report.txt
+GFISHERD24 — comparison with state-of-the-art trackers
+Method	HOTA↑	DetA↑	AssA↑	IDF1↑	MOTA↑	IDSW↓
+OC-SORT	39.44	32.72	48.30	41.49	<!-- FILL IN: verify against appendix -->	281
+BoT-SORT	46.25	41.65	52.32	52.20	57.50%	439
+ByteTrack	44.32	42.04	47.34	62.28	60.90%	485
+ByteTrack + IMM	45.34	41.96	49.53	64.80	60.78%	318
+IMM-Byte (proposed)	45.08	42.26	48.67	63.70	61.30%	253
+
+Full per-sequence breakdowns are provided in the paper's Appendix and in results/per_sequence/.
+
+DanceTrack — generalization
+Method	HOTA	DetA	AssA	IDF1	MOTA	IDSW↓
+ByteTrack (baseline)	46.00	70.34	30.21	51.38	88.29%	1987
+ByteTrack + IMM	46.23	70.60	30.40	50.95	88.35%	1821
+
 ## Tracking
 
 * **Evaluation on your custom dataset**
@@ -426,6 +389,25 @@ cd <ByteTrack_HOME>
 python3 tools/demo_track.py video -f exps/example/mot/yolox_x_mix_det.py -c pretrained/bytetrack_x_mot17.pth.tar --fp16 --fuse --save_result
 ```
 
+<!--
 ## Acknowledgement
 A large part of the code is borrowed from [ByteTrack](https://github.com/FoundationVision/ByteTrack). Many thanks for their wonderful works.
 
+## Citation
+
+If you use this code or the GFISHERD24 dataset, please cite:
+
+<!-- FILL IN: final BibTeX once the paper is published/has a DOI -->
+bibtex
+@article{ebu2026immbyte,
+  title   = {Identity-Consistent Multi-Object Tracking via Interacting Multiple
+             Model Kalman Filtering for Fish Species Monitoring},
+  author  = {Ebu, Iffat Ara and Nabi, M M and Moorhead, Robert},
+  journal = {<!-- FILL IN -->},
+  year    = {2026}
+}
+-->
+## Acknowledgment
+Built on top of [ByteTrack](https://github.com/FoundationVision/ByteTrack) (Zhang et al., 2022). Detector based on [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) (Ge et al., 2021).FishIoU formulation adapted from Li et al. (2024), [When trackers date fish](https://vranlee.github.io/SU-T/). GFISHERD24 data collected by NOAA as part of its annual fishery-independent reef fish survey. This work is a collaboration between Mississippi State University's Northern Gulf Institute (NGI) and NOAA.
+Contact
+For questions about using this tool on your own survey data, please contact using this email: iffatebu@gmail.com
