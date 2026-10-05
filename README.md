@@ -114,10 +114,10 @@ IMM-Byte/
 │   |    # MOT evaluation for IDF1, MOTA, IDSW, and other metrics
 |   |
 |   ├── demo_updated_all_singleClassTrack.py
-│   │   # ???
+│   │   # Tracking inference on image sequences
 │   │
 │   └── demo_updated_all_singleClassTrack_VIDEO.py
-|       # ??
+|       # Tracking inference on videos sequences
 │
 ├── datasets/
 │   └── README.md
