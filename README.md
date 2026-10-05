@@ -305,7 +305,7 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 -->
 ## Training 
-The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under <ByteTrack_HOME>/ByteTrack/pretrained. The pretrained YOLOX-X model trained on GFISHERD24 is available here:
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under <ByteTrack_HOME>/ByteTrack/pretrained. The pretrained YOLOX-X model trained on single class GFISHERD24 is available here:
 
 **[Download Pretrained Model](https://drive.google.com/file/d/1_Bcerw_GU-YAvER1FfEhFRpxEcwzxhx_/view?usp=sharing)**
 
