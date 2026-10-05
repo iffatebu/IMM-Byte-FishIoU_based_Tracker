@@ -330,7 +330,7 @@ with ω1=1, ω2=0.2, ω3=0.2, ω4=0.6 (empirically tuned for this dataset).
 Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches.
 ### 3. Two-stage association (unchanged from ByteTrack)
 We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
-
+<!--
 # Usage
 # Run tracking on a video/sequence
 bash
@@ -355,7 +355,7 @@ ByteTrack + IMM	45.34	41.96	49.53	64.80	60.78%	318
 IMM-Byte (proposed)	45.08	42.26	48.67	63.70	61.30%	253
 
 Full per-sequence breakdowns are provided in the paper's Appendix and in results/per_sequence/.
-
+-->
 
 ## Tracking
 
