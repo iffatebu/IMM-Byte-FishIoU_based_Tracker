@@ -308,31 +308,26 @@ The COCO pretrained YOLOX model can be downloaded from their [model zoo](https:/
 ## Train custom dataset
 First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
 ~~~
-cd {ByteTrack_HOME}/ByteTrack
+cd <ByteTrack_HOME>
 # If running in cluster then run this Slurm command:
 sbatch training_YOLOX.sbatch
-# Otherwise-
+# Otherwise:
 python3 tools/train.py -f exps/example/mot/yolox_x_ablation.py -d 8 -b 48 --fp16 -o -c pretrained/yolox_x.pth
 ~~~
-If you running it in HPC cluster then you have to run sbatch file instead of this command in the terminal and the sbatch script is-
-```
-ByteTrack/training_YOLOX.sbatch
-```
-
 # Changed from baseline ByteTrack
 It summarizes every modification relative to the original ByteTrack repository.
 ### 1. Motion model: single Kalman Filter → IMM (CV + CA)
-- Baseline: ByteTrack predicts each track's next position using a single Kalman filter with a constant-velocity (CV) motion assumption (tracker/kalman_filter.py, unmodified, kept for ablation comparisons).
-- Our change: tracker/imm_filter.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters — CV and Constant Acceleration (CA) — and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
+- Baseline: ByteTrack predicts each track's next position using a single Kalman filter with a constant-velocity (CV) motion assumption.
+- Our change: tracker/imm_kalman_filter_CA.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters: CV + CA and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
 - Why: fish alternate between steady cruising and burst acceleration; a single CV filter lags badly during bursts, causing identity switches.
-- Mode transition matrix used: Π = [[0.95, 0.05], [0.09, 0.91]] (CV↔CA) <!-- FILL IN if you tuned this differently -->
+- Mode transition matrix used: Π = [[0.75, 0.25], [0.40, 0.60]] (CV↔CA) 
 ### 2. Association metric: standard IoU → FishIoU
 - Baseline: ByteTrack associates detections to tracks using bounding-box IoU.
-- Our change: tracker/fish_iou.py (new file) implements a modified association cost:
+- Our change: tracker/matching.py (new file) implements a modified association cost:
 FishIoU = ω1·IoU + ω2·aspect_ratio_consistency + ω3·area_consistency − ω4·scaled_center_distance
 with ω1=1, ω2=0.2, ω3=0.2, ω4=0.6 (empirically tuned for this dataset).
 
-Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches (see paper Section III-D / Fig. 12).
+Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches.
 ### 3. Two-stage association (unchanged from ByteTrack)
 We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
 
@@ -370,10 +365,12 @@ Run ByteTrack:
 
 ```
 cd <ByteTrack_HOME>
+# If running in cluster then run this Slurm command:
+sbatch tracking_BYTE_fish.sbatch
+# Otherwise:
 python3 tools/demo_updated_all_singleClassTrack.py images -f exps/example/mot/yolox_x_ablation.py -c pretrained/best_ckpt.pth.tar --fp16 --fuse --save_result
 
 ```
-You can get 76.6 MOTA using our pretrained model.
 The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
 
 ## Demo
