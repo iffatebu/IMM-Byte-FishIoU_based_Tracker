@@ -264,7 +264,7 @@ scancel <Job ID>
 Initially you can start working with the MOT format dataset described here [ByteTrack/Data preparation](https://github.com/FoundationVision/ByteTrack#data-preparation) in detail. Then in the similar way any custom data can be possible to make ready for this tracking algorithm.
 <!-- Convert annotations to coco format:
 ```
-cd {ByteTrack_HOME}
+cd <ByteTrack_HOME>
 python3 tools/convert_mot17_to_coco.py
 cd ByteTrack/datasets
 ln -s ../../mot mot_train
@@ -272,7 +272,7 @@ cd ..
 ```
 Organize as follows:
 ```
-{ByteTrack_HOME}
+<ByteTrack_HOME>
 |-- mot
 |   |-- train
 |   |   |-- VID_Name
@@ -304,7 +304,7 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 -->
 ## Training 
-The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack_HOME}/ByteTrack/pretrained.
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under <ByteTrack_HOME>/ByteTrack/pretrained.
 ## Train custom dataset
 First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
 ~~~
