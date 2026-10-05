@@ -304,7 +304,17 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 -->
 ## Training 
-The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under <ByteTrack_HOME>/ByteTrack/pretrained.
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under <ByteTrack_HOME>/ByteTrack/pretrained. The pretrained YOLOX-X model trained on GFISHERD24 is available here:
+
+**[Download Pretrained Model](https://drive.google.com/file/d/1_Bcerw_GU-YAvER1FfEhFRpxEcwzxhx_/view?usp=sharing)**
+
+Place the downloaded checkpoint in:
+
+```text
+weights/
+└── best_ckpt.pth.tar
+```
+
 ## Train custom dataset
 First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
 ~~~
