@@ -359,7 +359,7 @@ Full per-sequence breakdowns are provided in the paper's Appendix and in results
 
 ## Tracking
 
-* **Evaluation on your custom dataset**
+### Run Tracking on image or video sequences
 
 Run ByteTrack:
 
@@ -372,6 +372,16 @@ python3 tools/demo_updated_all_singleClassTrack.py images -f exps/example/mot/yo
 
 ```
 The output txt will be saved in YOLOX_outputs/yolox_x/track_results folder.
+
+### Evaluate the quantitative performance of the resutls with motmetrices
+```
+cd <ByteTrack_HOME>
+# If running in cluster then run this Slurm command:
+sbatch Tracking_performance.sbatch
+# Otherwise:
+python3 tools/Tracking_Performance.py image -f exps/example/mot/yolox_x_ablation.py -c pretrained/best_ckpt.pth.tar --fp16 --fuse --save_result
+
+```
 
 ## Demo
 
