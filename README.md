@@ -316,14 +316,15 @@ If you running it in HPC cluster then you have to run sbatch file instead of thi
 ByteTrack/training_YOLOX.sbatch
 ```
 
-# What we changed from baseline ByteTrack
-This section is aimed at anyone extending or auditing the code — it summarizes every modification relative to the original ByteTrack repository.
+# Changed from baseline ByteTrack
+It summarizes every modification relative to the original ByteTrack repository.
+```
 # 1. Motion model: single Kalman Filter → IMM (CV + CA)
 - Baseline: ByteTrack predicts each track's next position using a single Kalman filter with a constant-velocity (CV) motion assumption (tracker/kalman_filter.py, unmodified, kept for ablation comparisons).
 - Our change: tracker/imm_filter.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters — CV and Constant Acceleration (CA) — and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
 - Why: fish alternate between steady cruising and burst acceleration; a single CV filter lags badly during bursts, causing identity switches.
 - Mode transition matrix used: Π = [[0.95, 0.05], [0.09, 0.91]] (CV↔CA) <!-- FILL IN if you tuned this differently -->
-
+```
 # 2. Association metric: standard IoU → FishIoU
 - Baseline: ByteTrack associates detections to tracks using bounding-box IoU.
 - Our change: tracker/fish_iou.py (new file) implements a modified association cost:
