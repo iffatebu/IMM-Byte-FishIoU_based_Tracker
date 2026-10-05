@@ -408,6 +408,4 @@ bibtex
 }
 -->
 ## Acknowledgment
-Built on top of [ByteTrack](https://github.com/FoundationVision/ByteTrack) (Zhang et al., 2022). Detector based on [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) (Ge et al., 2021).FishIoU formulation adapted from Li et al. (2024), [When trackers date fish](https://vranlee.github.io/SU-T/). GFISHERD24 data collected by NOAA as part of its annual fishery-independent reef fish survey. This work is a collaboration between Mississippi State University's Northern Gulf Institute (NGI) and NOAA.
-Contact
-For questions about using this tool on your own survey data, please contact using this email: iffatebu@gmail.com
+Built on top of [ByteTrack](https://github.com/FoundationVision/ByteTrack) (Zhang et al., 2022). Detector based on [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) (Ge et al., 2021). FishIoU formulation adapted from Li et al. (2024), [When trackers date fish](https://vranlee.github.io/SU-T/). GFISHERD24 data collected by NOAA as part of its annual fishery-independent reef fish survey. This work is a collaboration between Mississippi State University's Northern Gulf Institute (NGI) and NOAA. If you have questions regarding the application of this tool to your own survey data, please contact ie93@msstate.edu.
