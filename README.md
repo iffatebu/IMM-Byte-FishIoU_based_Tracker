@@ -348,7 +348,7 @@ python tools/eval_motmetrics.py \
   --output eval_report.txt
 GFISHERD24 — comparison with state-of-the-art trackers
 Method	HOTA↑	DetA↑	AssA↑	IDF1↑	MOTA↑	IDSW↓
-OC-SORT	39.44	32.72	48.30	41.49	<!-- FILL IN: verify against appendix -->	281
+OC-SORT	39.44	32.72	48.30	41.49	<!-- FILL IN: verify against appendix ->	281
 BoT-SORT	46.25	41.65	52.32	52.20	57.50%	439
 ByteTrack	44.32	42.04	47.34	62.28	60.90%	485
 ByteTrack + IMM	45.34	41.96	49.53	64.80	60.78%	318
@@ -405,7 +405,7 @@ bibtex
   title   = {Identity-Consistent Multi-Object Tracking via Interacting Multiple
              Model Kalman Filtering for Fish Species Monitoring},
   author  = {Ebu, Iffat Ara and Nabi, M M and Moorhead, Robert},
-  journal = {<!-- FILL IN -->},
+  journal = { FILL IN },
   year    = {2026}
 }
 -->
