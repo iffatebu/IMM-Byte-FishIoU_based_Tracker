@@ -264,7 +264,7 @@ scancel <Job ID>
 Initially you can start working with the MOT format dataset described here [ByteTrack/Data preparation](https://github.com/FoundationVision/ByteTrack#data-preparation) in detail. Then in the similar way any custom data can be possible to make ready for this tracking algorithm.
 <!-- Convert annotations to coco format:
 ```
-cd {ByteTrack ROOT}
+cd {ByteTrack_HOME}
 python3 tools/convert_mot17_to_coco.py
 cd ByteTrack/datasets
 ln -s ../../mot mot_train
@@ -272,7 +272,7 @@ cd ..
 ```
 Organize as follows:
 ```
-{ByteTrack ROOT}
+{ByteTrack_HOME}
 |-- mot
 |   |-- train
 |   |   |-- VID_Name
@@ -304,11 +304,14 @@ We align our dataset annotations with MOT, so each line in  gt.txt contains:
 ~~~
 -->
 ## Training 
-The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack ROOT}/ByteTrack/pretrained.
+The COCO pretrained YOLOX model can be downloaded from their [model zoo](https://github.com/Megvii-BaseDetection/YOLOX). After downloading the pretrained models, put them under {ByteTrack_HOME}/ByteTrack/pretrained.
 ## Train custom dataset
 First, you need to prepare your dataset in COCO format. You can refer to [MOT-to-COCO](https://github.com/ifzhang/ByteTrack/blob/main/tools/convert_mot17_to_coco.py). Then, you need to create a Exp file for your dataset. You can refer to the [CrowdHuman](https://github.com/ifzhang/ByteTrack/blob/main/exps/example/mot/yolox_x_ch.py) training Exp file. Don't forget to modify get_data_loader() and get_eval_loader in your Exp file. Finally, you can train bytetrack on your dataset by running:
 ~~~
-cd {ByteTrack ROOT}/ByteTrack
+cd {ByteTrack_HOME}/ByteTrack
+# If running in cluster then run this Slurm command:
+sbatch training_YOLOX.sbatch
+# Otherwise-
 python3 tools/train.py -f exps/example/mot/yolox_x_ablation.py -d 8 -b 48 --fp16 -o -c pretrained/yolox_x.pth
 ~~~
 If you running it in HPC cluster then you have to run sbatch file instead of this command in the terminal and the sbatch script is-
@@ -323,17 +326,15 @@ It summarizes every modification relative to the original ByteTrack repository.
 - Our change: tracker/imm_filter.py (new file) implements an Interacting Multiple Model estimator that runs two parallel filters — CV and Constant Acceleration (CA) — and fuses their outputs each frame based on continuously updated mode probabilities (Blom & Bar-Shalom, 1988).
 - Why: fish alternate between steady cruising and burst acceleration; a single CV filter lags badly during bursts, causing identity switches.
 - Mode transition matrix used: Π = [[0.95, 0.05], [0.09, 0.91]] (CV↔CA) <!-- FILL IN if you tuned this differently -->
-# 2. Association metric: standard IoU → FishIoU
+### 2. Association metric: standard IoU → FishIoU
 - Baseline: ByteTrack associates detections to tracks using bounding-box IoU.
 - Our change: tracker/fish_iou.py (new file) implements a modified association cost:
 FishIoU = ω1·IoU + ω2·aspect_ratio_consistency + ω3·area_consistency − ω4·scaled_center_distance
 with ω1=1, ω2=0.2, ω3=0.2, ω4=0.6 (empirically tuned for this dataset).
 
 Note: we deliberately omit the central-region IoU (cIoU) term from Li et al. (2024)'s original FishIoU formulation, since our camera setup has vertical bar occlusions that corrupt center-region overlap and cause false identity switches (see paper Section III-D / Fig. 12).
-# 3. Two-stage association (unchanged from ByteTrack)
+### 3. Two-stage association (unchanged from ByteTrack)
 We retain ByteTrack's high-confidence / low-confidence two-stage matching strategy (tracker/byte_tracker.py), simply substituting FishIoU as the cost function in place of standard IoU, and substituting IMM-predicted states in place of single-KF-predicted states.
-
-
 
 # Usage
 # Run tracking on a video/sequence
@@ -360,10 +361,6 @@ IMM-Byte (proposed)	45.08	42.26	48.67	63.70	61.30%	253
 
 Full per-sequence breakdowns are provided in the paper's Appendix and in results/per_sequence/.
 
-DanceTrack — generalization
-Method	HOTA	DetA	AssA	IDF1	MOTA	IDSW↓
-ByteTrack (baseline)	46.00	70.34	30.21	51.38	88.29%	1987
-ByteTrack + IMM	46.23	70.60	30.40	50.95	88.35%	1821
 
 ## Tracking
 
