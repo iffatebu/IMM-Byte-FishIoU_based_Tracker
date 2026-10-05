@@ -397,7 +397,6 @@ A large part of the code is borrowed from [ByteTrack](https://github.com/Foundat
 
 If you use this code or the GFISHERD24 dataset, please cite:
 
-<!-- FILL IN: final BibTeX once the paper is published/has a DOI -->
 bibtex
 @article{ebu2026immbyte,
   title   = {Identity-Consistent Multi-Object Tracking via Interacting Multiple
